@@ -7,12 +7,12 @@ export const selectFilter = (products, filter) => {
 
   return products.filter((product) => {
     const isInRange = filter.maxPrice
-      ? (product.price >= filter.minPrice && product.price <= filter.maxPrice)
+      ? (product.precio >= filter.minPrice && product.precio <= filter.maxPrice)
       : true;
     const matchKeyword = product.keywords ? product.keywords.includes(keyword) : true;
     // const matchName = product.name ? product.name.toLowerCase().includes(keyword) : true;
     const matchDescription = product.description
-      ? product.description.toLowerCase().includes(keyword)
+      ? product.descripcion.toLowerCase().includes(keyword)
       : true;
     const matchBrand = product.brand ? product.brand.toLowerCase().includes(filter.brand) : true;
 
@@ -23,10 +23,10 @@ export const selectFilter = (products, filter) => {
     } else if (filter.sortBy === 'name-asc') {
       return a.name > b.name ? 1 : -1;
     } else if (filter.sortBy === 'price-desc') {
-      return a.price < b.price ? 1 : -1;
+      return a.precio < b.precio ? 1 : -1;
     }
 
-    return a.price > b.price ? 1 : -1;
+    return a.precio > b.precio ? 1 : -1;
   });
 };
 
@@ -37,12 +37,12 @@ export const selectMax = (products) => {
   let high = products[0];
 
   for (let i = 0; i < products.length; i++) {
-    if (products[i].price > high.price) {
+    if (products[i].precio > high.precio) {
       high = products[i];
     }
   }
 
-  return Math.floor(high.price);
+  return Math.floor(high.precio);
 };
 
 // Select product with lowest price
@@ -51,10 +51,10 @@ export const selectMin = (products) => {
   let low = products[0];
 
   for (let i = 0; i < products.length; i++) {
-    if (products[i].price < low.price) {
+    if (products[i].precio < low.precio) {
       low = products[i];
     }
   }
 
-  return Math.floor(low.price);
+  return Math.floor(low.precio);
 };

@@ -16,17 +16,17 @@ const ProductFeatured = ({ product }) => {
     <SkeletonTheme color="#e1e1e1" highlightColor="#f2f2f2">
       <div className="product-display" onClick={onClickItem} role="presentation">
         <div className="product-display-img">
-          {product.image ? (
+          {product.imagen ? (
             <ImageLoader
               className="product-card-img"
-              src={product.image}
+              src={product.imagen}
             />
           ) : <Skeleton width="100%" height="100%" />}
         </div>
         <div className="product-display-details">
-          <h2>{product.name || <Skeleton width={80} />}</h2>
+          <h2>{product.nombre || <Skeleton width={80} />}</h2>
           <p className="text-subtle text-italic">
-            {product.brand || <Skeleton width={40} />}
+            {product.precio || <Skeleton width={40} />}
           </p>
         </div>
       </div>
@@ -36,10 +36,9 @@ const ProductFeatured = ({ product }) => {
 
 ProductFeatured.propTypes = {
   product: PropType.shape({
-    image: PropType.string,
-    name: PropType.string,
-    id: PropType.string,
-    brand: PropType.string
+    //image: PropType.string,
+    nombre: PropType.string,
+    id: PropType.number,
   }).isRequired
 };
 

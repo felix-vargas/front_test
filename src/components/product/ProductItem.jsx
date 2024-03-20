@@ -20,7 +20,7 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
   const itemOnBasket = isItemOnBasket ? isItemOnBasket(product.id) : false;
 
   const handleAddToBasket = () => {
-    if (addToBasket) addToBasket({ ...product, selectedSize: product.sizes[0] });
+    if (addToBasket) addToBasket({ ...product, selectedSize: product.talla });
   };
 
   return (
@@ -39,23 +39,23 @@ const ProductItem = ({ product, isItemOnBasket, addToBasket }) => {
           role="presentation"
         >
           <div className="product-card-img-wrapper">
-            {product.image ? (
+            {product.imagen ? (
               <ImageLoader
-                alt={product.name}
+                alt={product.nombre}
                 className="product-card-img"
-                src={product.image}
+                src={product.imagen}
               />
             ) : <Skeleton width="100%" height="90%" />}
           </div>
           <div className="product-details">
             <h5 className="product-card-name text-overflow-ellipsis margin-auto">
-              {product.name || <Skeleton width={80} />}
+              {product.nombre || <Skeleton width={80} />}
             </h5>
             <p className="product-card-brand">
-              {product.brand || <Skeleton width={60} />}
+              {product.precio || <Skeleton width={60} />}
             </p>
             <h4 className="product-card-price">
-              {product.price ? displayMoney(product.price) : <Skeleton width={40} />}
+              {product.precio ? displayMoney(product.precio) : <Skeleton width={40} />}
             </h4>
           </div>
         </div>

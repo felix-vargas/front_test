@@ -30,10 +30,6 @@ const useFeaturedProducts = (itemsCount) => {
       } else {
         const items = docs;
 
-        docs.forEach((doc) => {
-          items.push({ id: doc.id, ...doc });
-        });
-
         if (didMount) {
           setFeaturedProducts(items);
           setLoading(false);
