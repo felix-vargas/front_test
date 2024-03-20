@@ -145,7 +145,7 @@ const ViewProduct = () => {
           <div style={{ marginTop: '10rem' }}>
             <div className="display-header">
               <h1>Recommended</h1>
-              <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
+              <Link to={RECOMMENDED_PRODUCTS}>Ver todo</Link>
             </div>
             {errorFeatured && !isLoadingFeatured ? (
               <MessageDisplay

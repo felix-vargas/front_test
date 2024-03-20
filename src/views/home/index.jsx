@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 
 const Home = () => {
-  useDocumentTitle('Salinaka | Home');
+  useDocumentTitle('Dolfino Tienda');
   useScrollTop();
 
   const {
@@ -33,17 +33,16 @@ const Home = () => {
         <div className="banner">
           <div className="banner-desc">
             <h1 className="text-thin">
-              <strong>See</strong>
-              &nbsp;everything with&nbsp;
-              <strong>Clarity</strong>
+              <strong>Chupame</strong>
+              &nbsp;el&nbsp;
+              <strong>Zapato</strong>
             </h1>
             <p>
-              Buying eyewear should leave you happy and good-looking, with money in your pocket.
-              Glasses, sunglasses, and contacts—we’ve got your eyes covered.
+              Comprame esta otra
             </p>
             <br />
             <Link to={SHOP} className="button">
-              Shop Now &nbsp;
+              Comprar&nbsp;
               <ArrowRightOutlined />
             </Link>
           </div>
@@ -51,8 +50,8 @@ const Home = () => {
         </div>
         <div className="display">
           <div className="display-header">
-            <h1>Featured Products</h1>
-            <Link to={FEATURED_PRODUCTS}>See All</Link>
+            <h1>Productos destacados</h1>
+            <Link to={FEATURED_PRODUCTS}>Ver todo</Link>
           </div>
           {(errorFeatured && !isLoadingFeatured) ? (
             <MessageDisplay
@@ -69,8 +68,8 @@ const Home = () => {
         </div>
         <div className="display">
           <div className="display-header">
-            <h1>Recommended Products</h1>
-            <Link to={RECOMMENDED_PRODUCTS}>See All</Link>
+            <h1>Productos recomendados</h1>
+            <Link to={RECOMMENDED_PRODUCTS}>Ver todo</Link>
           </div>
           {(errorRecommended && !isLoadingRecommended) ? (
             <MessageDisplay
