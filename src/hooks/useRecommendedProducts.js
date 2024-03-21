@@ -17,7 +17,7 @@ const useRecommendedProducts = (itemsCount) => {
 
       if (docs.empty) {
         if (didMount) {
-          setError('No recommended products found.');
+          setError('No se encontraron productos recomendados.');
           setLoading(false);
         }
       } else {
@@ -35,7 +35,7 @@ const useRecommendedProducts = (itemsCount) => {
       }
     } catch (e) {
       if (didMount) {
-        setError('Failed to fetch recommended products');
+        setError('Error al obtener productos recomendados.');
         setLoading(false);
       }
     }

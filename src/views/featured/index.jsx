@@ -1,7 +1,7 @@
 import { MessageDisplay } from '@/components/common';
 import { ProductShowcaseGrid } from '@/components/product';
 import { useDocumentTitle, useFeaturedProducts, useScrollTop } from '@/hooks';
-import bannerImg from '@/images/banner-guy.png';
+import bannerImg from '@/images/banner.png';
 import React from 'react';
 
 const FeaturedProducts = () => {
@@ -34,7 +34,7 @@ const FeaturedProducts = () => {
       <div className="featured">
         <div className="banner">
           <div className="banner-desc">
-            <h1>Featured Products</h1>
+            <h1>Productos destacados</h1>
           </div>
           <div className="banner-img">
             <img src={bannerImg} alt="" />

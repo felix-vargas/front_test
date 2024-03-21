@@ -48,6 +48,16 @@ const ViewProduct = () => {
     }
   };
 
+  const sizes = ["S", "M", "L", "XL"];
+
+  const sortedSizes = sizes.sort((a, b) => {
+    // Define the desired order of sizes
+    const sizeOrder = { "S": 0, "M": 1, "L": 2, "XL": 3 };
+
+    // Compare the sizes based on their order
+    return sizeOrder[a] - sizeOrder[b];
+  });
+
   const handleAddToBasket = () => {
     addToBasket({ ...product, selectedColor, selectedSize: selectedSize || product.sizes[0] });
   };
@@ -56,7 +66,7 @@ const ViewProduct = () => {
     <main className="content">
       {isLoading && (
         <div className="loader">
-          <h4>Loading Product...</h4>
+          <h4>Cargando producto...</h4>
           <br />
           <LoadingOutlined style={{ fontSize: '3rem' }} />
         </div>
@@ -69,13 +79,13 @@ const ViewProduct = () => {
           <Link to={SHOP}>
             <h3 className="button-link d-inline-flex">
               <ArrowLeftOutlined />
-              &nbsp; Back to shop
+              &nbsp; Volver a la tienda
             </h3>
           </Link>
           <div className="product-modal">
-            {product.imageCollection.length !== 0 && (
+            {product.imagen !== null && (
               <div className="product-modal-image-collection">
-                {product.imageCollection.map((image) => (
+                {product.imagen.map((image) => (
                   <div
                     className="product-modal-image-collection-wrapper"
                     key={image.id}
@@ -93,7 +103,7 @@ const ViewProduct = () => {
             <div className="product-modal-image-wrapper">
               {selectedColor && <input type="color" disabled ref={colorOverlay} id="color-overlay" />}
               <ImageLoader
-                alt={product.name}
+                alt={product.nombre}
                 className="product-modal-image"
                 src={selectedImage}
               />
@@ -101,27 +111,27 @@ const ViewProduct = () => {
             <div className="product-modal-details">
               <br />
               <span className="text-subtle">{product.brand}</span>
-              <h1 className="margin-top-0">{product.name}</h1>
-              <span>{product.description}</span>
+              <h1 className="margin-top-0">{product.nombre}</h1>
+              <span>{product.descripcion}</span>
               <br />
               <br />
               <div className="divider" />
               <br />
               <div>
-                <span className="text-subtle">Lens Width and Frame Size</span>
+                <span className="text-subtle">{product.descripcion}</span>
                 <br />
                 <br />
                 <Select
                   placeholder="--Select Size--"
                   onChange={onSelectedSizeChange}
-                  options={product.sizes.sort((a, b) => (a < b ? -1 : 1)).map((size) => ({ label: `${size} mm`, value: size }))}
+                  options={sortedSizes.map((size) => ({ label: size, value: size }))}
                   styles={{ menu: (provided) => ({ ...provided, zIndex: 10 }) }}
                 />
               </div>
               <br />
-              {product.availableColors.length >= 1 && (
+              {/* {product.availableColors.length !== undefined && (
                 <div>
-                  <span className="text-subtle">Choose Color</span>
+                  <span className="text-subtle">Seleccionar talla</span>
                   <br />
                   <br />
                   <ColorChooser
@@ -129,8 +139,8 @@ const ViewProduct = () => {
                     onSelectedColorChange={onSelectedColorChange}
                   />
                 </div>
-              )}
-              <h1>{displayMoney(product.price)}</h1>
+              )} */}
+              <h1>{displayMoney(product.precio)}</h1>
               <div className="product-modal-action">
                 <button
                   className={`button button-small ${isItemOnBasket(product.id) ? 'button-border button-border-gray' : ''}`}
@@ -141,21 +151,6 @@ const ViewProduct = () => {
                 </button>
               </div>
             </div>
-          </div>
-          <div style={{ marginTop: '10rem' }}>
-            <div className="display-header">
-              <h1>Recommended</h1>
-              <Link to={RECOMMENDED_PRODUCTS}>Ver todo</Link>
-            </div>
-            {errorFeatured && !isLoadingFeatured ? (
-              <MessageDisplay
-                message={error}
-                action={fetchRecommendedProducts}
-                buttonLabel="Try Again"
-              />
-            ) : (
-              <ProductShowcaseGrid products={recommendedProducts} skeletonCount={3} />
-            )}
           </div>
         </div>
       )}

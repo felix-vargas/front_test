@@ -15,11 +15,9 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-col-1">
         <strong>
-          <span>
-            Developed by
-            {' '}
-            <a href="https://github.com/jgudo">JULIUS GUEVARRA</a>
-          </span>
+          <p>
+            Encu&eacute;ntranos en redes sociales
+          </p>
         </strong>
       </div>
       <div className="footer-col-2">
@@ -31,10 +29,12 @@ const Footer = () => {
       </div>
       <div className="footer-col-3">
         <strong>
-          <span>
-            Fork this project &nbsp;
-            <a href="https://github.com/jgudo/ecommerce-react">HERE</a>
-          </span>
+          <p>
+            Contact&aacute;nos mediante los siguientes medios:
+          </p>
+          <p>
+            +56 9 1234 5678
+          </p>
         </strong>
       </div>
     </footer>

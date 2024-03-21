@@ -80,11 +80,11 @@ const Filters = ({ closeModal }) => {
   return (
     <div className="filters">
       <div className="filters-field">
-        <span>Brand</span>
+        <span>Talla</span>
         <br />
         <br />
         {products.length === 0 && isLoading ? (
-          <h5 className="text-subtle">Loading Filter</h5>
+          <h5 className="text-subtle">Cargando filtros</h5>
         ) : (
           <select
             className="filters-brand"
@@ -92,16 +92,16 @@ const Filters = ({ closeModal }) => {
             disabled={isLoading || products.length === 0}
             onChange={onBrandFilterChange}
           >
-            <option value="">All Brands</option>
-            <option value="salt">Salt Maalat</option>
-            <option value="betsin">Betsin Maalat</option>
-            <option value="black">Black Kibal</option>
-            <option value="sexbomb">Sexbomb</option>
+            <option value="">Todas las tallas</option>
+            <option value="salt">S</option>
+            <option value="betsin">M</option>
+            <option value="black">L</option>
+            <option value="sexbomb">XL</option>
           </select>
         )}
       </div>
       <div className="filters-field">
-        <span>Sort By</span>
+        <span>Ordenar por</span>
         <br />
         <br />
         <select
@@ -111,10 +111,11 @@ const Filters = ({ closeModal }) => {
           onChange={onSortFilterChange}
         >
           <option value="">None</option>
+          <option value="price-asc">Precio M&aacute;s Bajo</option>
+          <option value="price-desc">Precio M&aacute;s Alto</option>
           <option value="name-asc">Name Ascending A - Z</option>
           <option value="name-desc">Name Descending Z - A</option>
-          <option value="price-desc">Price High - Low</option>
-          <option value="price-asc">Price Low - High</option>
+
         </select>
       </div>
       <div className="filters-field">

@@ -68,7 +68,7 @@ const SignUp = ({ history }) => {
           )}
           <div className={`auth ${authStatus?.message && (!authStatus?.success && 'input-error')}`}>
             <div className="auth-main">
-              <h3>Sign up to Salinaka</h3>
+              <h3>Registrate en Dolfino Tienda</h3>
               <Formik
                 initialValues={{
                   fullname: '',
@@ -86,8 +86,8 @@ const SignUp = ({ history }) => {
                         disabled={isAuthenticating}
                         name="fullname"
                         type="text"
-                        label="* Full Name"
-                        placeholder="John Doe"
+                        label="* Nombre completo"
+                        placeholder="Juan Perez"
                         style={{ textTransform: 'capitalize' }}
                         component={CustomInput}
                       />
@@ -97,8 +97,8 @@ const SignUp = ({ history }) => {
                         disabled={isAuthenticating}
                         name="email"
                         type="email"
-                        label="* Email"
-                        placeholder="test@example.com"
+                        label="* Correo electr&oacute;nico"
+                        placeholder="correo@ejemplo.com"
                         component={CustomInput}
                       />
                     </div>
@@ -107,8 +107,8 @@ const SignUp = ({ history }) => {
                         disabled={isAuthenticating}
                         name="password"
                         type="password"
-                        label="* Password"
-                        placeholder="Your Password"
+                        label="* Contrase&ntilde;a"
+                        placeholder="Tu contrase&ntilde;a"
                         component={CustomInput}
                       />
                     </div>
@@ -119,7 +119,7 @@ const SignUp = ({ history }) => {
                         disabled={isAuthenticating}
                         type="submit"
                       >
-                        {isAuthenticating ? 'Signing Up' : 'Sign Up'}
+                        {isAuthenticating ? 'Registrando' : 'Registrarse'}
                         &nbsp;
                         {isAuthenticating ? <LoadingOutlined /> : <ArrowRightOutlined />}
                       </button>
@@ -129,13 +129,13 @@ const SignUp = ({ history }) => {
               </Formik>
             </div>
             <div className="auth-divider">
-              <h6>OR</h6>
+              <h6>&Oacute;</h6>
             </div>
             <SocialLogin isLoading={isAuthenticating} />
           </div>
           <div className="auth-message">
             <span className="auth-info">
-              <strong>Already have an account?</strong>
+              <strong>&iquest;Ya tienes una cuenta?</strong>
             </span>
             <button
               className="button button-small button-border button-border-gray"
@@ -143,7 +143,7 @@ const SignUp = ({ history }) => {
               onClick={onClickSignIn}
               type="button"
             >
-              Sign In
+              Iniciar sesi&oacute;n
             </button>
           </div>
         </>

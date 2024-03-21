@@ -60,7 +60,7 @@ const Basket = () => {
         isOpen={isOpenModal}
         onRequestClose={onCloseModal}
       >
-        <p className="text-center">You must sign in to continue checking out</p>
+        <p className="text-center">Debes iniciar sesi&oacute;n para terminar tu compra.</p>
         <br />
         <div className="d-flex-center">
           <button
@@ -68,7 +68,7 @@ const Basket = () => {
             onClick={onCloseModal}
             type="button"
           >
-            Continue shopping
+            Continuar comprando
           </button>
           &nbsp;
           <button
@@ -76,7 +76,7 @@ const Basket = () => {
             onClick={onSignInClick}
             type="button"
           >
-            Sign in to checkout
+            Iniciar sesi&oacute;n para finalizar compra
           </button>
         </div>
       </Modal>
@@ -84,10 +84,10 @@ const Basket = () => {
         <div className="basket-list">
           <div className="basket-header">
             <h3 className="basket-header-title">
-              My Basket &nbsp;
+              Mi carro &nbsp;
               <span>
                 (
-                {` ${basket.length} ${basket.length > 1 ? 'items' : 'item'}`}
+                {` ${basket.length} ${basket.length > 1 ? 'producto/s' : 'productos'}`}
                 )
               </span>
             </h3>
@@ -98,7 +98,7 @@ const Basket = () => {
                   onClick={onClickToggle}
                   role="presentation"
                 >
-                  Close
+                  Cerrar
                 </span>
               )}
             </BasketToggle>
@@ -108,12 +108,12 @@ const Basket = () => {
               onClick={onClearBasket}
               type="button"
             >
-              <span>Clear Basket</span>
+              <span>Vaciar carro</span>
             </button>
           </div>
           {basket.length <= 0 && (
             <div className="basket-empty">
-              <h5 className="basket-empty-msg">Your basket is empty</h5>
+              <h5 className="basket-empty-msg">Carro vac&iacute;o</h5>
             </div>
           )}
           {basket.map((product, i) => (
@@ -128,7 +128,7 @@ const Basket = () => {
         </div>
         <div className="basket-checkout">
           <div className="basket-total">
-            <p className="basket-total-title">Subtotal Amout:</p>
+            <p className="basket-total-title">Monto total:</p>
             <h2 className="basket-total-amount">
               {displayMoney(calculateTotal(basket.map((product) => product.precio * product.quantity)))}
             </h2>
@@ -139,7 +139,7 @@ const Basket = () => {
             onClick={onCheckOut}
             type="button"
           >
-            Check Out
+            Pagar
           </button>
         </div>
       </div>

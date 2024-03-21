@@ -5,7 +5,7 @@ import { FEATURED_PRODUCTS, RECOMMENDED_PRODUCTS, SHOP } from '@/constants/route
 import {
   useDocumentTitle, useFeaturedProducts, useRecommendedProducts, useScrollTop
 } from '@/hooks';
-import bannerImg from '@/images/banner-girl.png';
+import bannerImg from '@/images/banner.png';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -33,12 +33,15 @@ const Home = () => {
         <div className="banner">
           <div className="banner-desc">
             <h1 className="text-thin">
-              <strong>Chupame</strong>
-              &nbsp;el&nbsp;
-              <strong>Zapato</strong>
+              <strong>Dolfino</strong>
+              &nbsp;4&nbsp;
+              <strong>All</strong>
             </h1>
+            <h2 className="text-thin">
+              <strong>Moda circular</strong>
+            </h2>
             <p>
-              Comprame esta otra
+              Hecho a mano, producto chileno
             </p>
             <br />
             <Link to={SHOP} className="button">
@@ -62,24 +65,6 @@ const Home = () => {
           ) : (
             <ProductShowcaseGrid
               products={featuredProducts}
-              skeletonCount={6}
-            />
-          )}
-        </div>
-        <div className="display">
-          <div className="display-header">
-            <h1>Productos recomendados</h1>
-            <Link to={RECOMMENDED_PRODUCTS}>Ver todo</Link>
-          </div>
-          {(errorRecommended && !isLoadingRecommended) ? (
-            <MessageDisplay
-              message={errorRecommended}
-              action={fetchRecommendedProducts}
-              buttonLabel="Try Again"
-            />
-          ) : (
-            <ProductShowcaseGrid
-              products={recommendedProducts}
               skeletonCount={6}
             />
           )}

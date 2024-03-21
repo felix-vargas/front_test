@@ -5,50 +5,39 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '@/redux/actions/miscActions';
 import { getProducts } from '@/redux/actions/productActions';
+import axios from 'axios';
 
 const ProductList = (props) => {
-  const {
-    products, filteredProducts, isLoading, requestStatus, children
-  } = props;
-  const [isFetching, setFetching] = useState(false);
   const dispatch = useDispatch();
+  const { children } = props;
+  const [products, setProducts] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const [isFetching, setFetching] = useState(false);
+  const [requestStatus, setRequestStatus] = useState(null);
 
-  const fetchProducts = () => {
-    setFetching(true);
-    dispatch(getProducts(products.lastRefKey));
-  };
-
-  useEffect(() => {
-    if (products.items.length === 0 || !products.lastRefKey) {
-      fetchProducts();
+  const fetchProducts = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('http://localhost:8000/api/productos');
+      setProducts(response.data);
+      setRequestStatus(null);
+    } catch (error) {
+      setRequestStatus({ message: 'Error al obtener productos' });
+    } finally {
+      setLoading(false);
+      setFetching(false);
     }
-
-    window.scrollTo(0, 0);
-    return () => dispatch(setLoading(false));
+  };
+  useEffect(() => {
+    fetchProducts();
   }, []);
 
-  useEffect(() => {
-    setFetching(false);
-  }, [products.lastRefKey]);
 
-  if (filteredProducts.length === 0 && !isLoading) {
-    return (
-      <MessageDisplay message={requestStatus?.message || 'No products found.'} />
-    );
-  } if (filteredProducts.length === 0 && requestStatus) {
-    return (
-      <MessageDisplay
-        message={requestStatus?.message || 'Something went wrong :('}
-        action={fetchProducts}
-        buttonLabel="Try Again"
-      />
-    );
-  }
   return (
     <Boundary>
       {children}
       {/* Show 'Show More' button if products length is less than total products */}
-      {products.items.length < products.total && (
+      {products.length > 0 && (
         <div className="d-flex-center padding-l">
           <button
             className="button button-small"
@@ -56,7 +45,7 @@ const ProductList = (props) => {
             onClick={fetchProducts}
             type="button"
           >
-            {isFetching ? 'Fetching Items...' : 'Show More Items'}
+            {isFetching ? 'Buscando productos...' : 'Mostrar mas productos'}
           </button>
         </div>
       )}

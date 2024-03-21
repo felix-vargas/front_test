@@ -17,14 +17,11 @@ const useFeaturedProducts = (itemsCount) => {
       //const docs = await firebase.getFeaturedProducts(itemsCount);
 
       const result = await axios.get('http://localhost:8000/api/productos');      
-      console.log('--------');
-      console.log(result);
-      console.log('--------');
       let docs = result.data;
       console.log(docs);
       if (docs.empty) {
         if (didMount) {
-          setError('No featured products found.');
+          setError('No se encontraron productos destacados.');
           setLoading(false);
         }
       } else {
@@ -37,7 +34,7 @@ const useFeaturedProducts = (itemsCount) => {
       }
     } catch (e) {
       if (didMount) {
-        setError('Failed to fetch featured products');
+        setError('No se encontraron productos destacados.');
         setLoading(false);
       }
     }

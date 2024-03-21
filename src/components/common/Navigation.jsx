@@ -78,7 +78,7 @@ const Navigation = () => {
       {(pathname === ROUTE.SHOP || pathname === ROUTE.SEARCH) && (
         <FiltersToggle>
           <button className="button-muted button-small" type="button">
-            Filters &nbsp;
+            Filtros &nbsp;
             <FilterOutlined />
           </button>
         </FiltersToggle>
@@ -114,7 +114,7 @@ const Navigation = () => {
                 onClick={onClickLink}
                 to={ROUTE.SIGNUP}
               >
-                Sign Up
+                Registrarse
               </Link>
             )}
             {pathname !== ROUTE.SIGNIN && (
@@ -123,7 +123,7 @@ const Navigation = () => {
                 onClick={onClickLink}
                 to={ROUTE.SIGNIN}
               >
-                Sign In
+                Iniciar sesi&oacute;n
               </Link>
             )}
           </li>
