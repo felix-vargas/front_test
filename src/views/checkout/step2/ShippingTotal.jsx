@@ -13,12 +13,12 @@ const ShippingTotal = ({ subtotal }) => {
           <tr>
             <td>
               <span className="d-block margin-0 padding-right-s text-right">
-                International Shipping: &nbsp;
+                Costo de despacho: &nbsp;
               </span>
             </td>
             <td>
               <h4 className="basket-total-amount text-subtle text-right margin-0 ">
-                {values.isInternational ? '$50.00' : '$0.00'}
+                {values.isInternational ? '$2.990' : '$7.990'}
               </h4>
             </td>
           </tr>
@@ -42,7 +42,7 @@ const ShippingTotal = ({ subtotal }) => {
             </td>
             <td>
               <h2 className="basket-total-amount text-right">
-                {displayMoney(Number(subtotal) + (values.isInternational ? 50 : 0))}
+                {displayMoney(Number(subtotal) + (values.isInternational ? 2990 : 7990))}
               </h2>
             </td>
           </tr>

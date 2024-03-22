@@ -4,10 +4,12 @@ import { Boundary, MessageDisplay } from '@/components/common';
 import { ProductGrid } from '@/components/product';
 import { useDidMount } from '@/hooks';
 import PropType from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect ,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRequestStatus } from '@/redux/actions/miscActions';
 import { searchProduct } from '@/redux/actions/productActions';
+import axios from 'axios';
+
 
 const Search = ({ match }) => {
   const { searchKey } = match.params;
@@ -20,28 +22,45 @@ const Search = ({ match }) => {
     requestStatus: state.app.requestStatus
   }));
 
-  useEffect(() => {
-    if (didMount && !store.isLoading) {
-      dispatch(searchProduct(searchKey));
+  const [products, setProducts] = useState([]);
+  const [requestStatus, setRequestStatus] = useState(false);
+
+  const fetchProducts = async () => {
+    try {
+      let response = await axios.get('http://localhost:8000/api/productos');
+      response = response.data
+
+      const filteredResponse = response.filter(item =>
+        item.nombre.toLowerCase().includes(searchKey.toLowerCase()) || 
+        item.descripcion.toLowerCase().includes(searchKey.toLowerCase())
+      );      
+      console.log('Filtered:',filteredResponse)
+      setProducts(filteredResponse);
+      setRequestStatus(true);
+    } catch (error) {
+      setRequestStatus(false);
+    } finally {
+
     }
+  };
+  useEffect(() => {
+    fetchProducts();
   }, [searchKey]);
 
-  useEffect(() => () => {
-    dispatch(setRequestStatus(''));
-  }, []);
 
-  if (store.requestStatus && !store.isLoading) {
+
+
+  if (!requestStatus) {
     return (
       <main className="content">
         <MessageDisplay
           message={store.requestStatus}
-          desc="Try using correct filters or keyword."
+          desc="Intenta usar otras palabras para buscar"
         />
       </main>
     );
   }
-
-  if (!store.requestStatus && !store.isLoading) {
+  if (requestStatus){
     return (
       <Boundary>
         <main className="content">
@@ -50,12 +69,12 @@ const Search = ({ match }) => {
               <div className="product-list-header">
                 <div className="product-list-header-title">
                   <h5>
-                    {`Found ${store.products.length} ${store.products.length > 1 ? 'products' : 'product'} with keyword ${searchKey}`}
+                    {`Se encontraron ${products.length} ${products.length === 1 ? 'prenda' : 'prendas'} con las palabras de busqueda: ${searchKey}`}
                   </h5>
                 </div>
               </div>
             )}
-            <ProductGrid products={store.products} />
+            <ProductGrid products={products} />
           </section>
         </main>
       </Boundary>
@@ -65,7 +84,7 @@ const Search = ({ match }) => {
   return (
     <main className="content">
       <div className="loader">
-        <h4>Searching Product...</h4>
+        <h4>Buscando productos...</h4>
         <br />
         <LoadingOutlined style={{ fontSize: '3rem' }} />
       </div>

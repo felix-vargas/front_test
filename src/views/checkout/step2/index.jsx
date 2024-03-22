@@ -30,19 +30,20 @@ const FormSchema = Yup.object().shape({
     .shape({
       country: Yup.string(),
       countryCode: Yup.string(),
-      dialCode: Yup.string().required('Mobile number is required'),
-      value: Yup.string().required('Mobile number is required')
+      dialCode: Yup.string().required('Numero de telefono es requerido'),
+      value: Yup.string().required('Numero de telefono es requerido')
     })
-    .required('Mobile number is required.'),
+    .required('Numero de telefono es requerido'),
   isInternational: Yup.boolean(),
   isDone: Yup.boolean()
 });
 
-const ShippingDetails = ({ profile, shipping, subtotal }) => {
-  useDocumentTitle('Check Out Step 2 | Salinaka');
+const ShippingDetails = ({ profile, shipping, subtotal, basket }) => {
+  useDocumentTitle('Envio | Dolfino');
   useScrollTop();
   const dispatch = useDispatch();
   const history = useHistory();
+  console.log(basket);
 
   const initFormikValues = {
     fullname: shipping.fullname || profile.fullname || '',
@@ -60,7 +61,8 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
       address: form.address,
       mobile: form.mobile,
       isInternational: form.isInternational,
-      isDone: true
+      isDone: true,
+      basket: basket
     }));
     history.push(CHECKOUT_STEP_3);
   };
@@ -70,7 +72,7 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
       <div className="checkout">
         <StepTracker current={2} />
         <div className="checkout-step-2">
-          <h3 className="text-center">Shipping Details</h3>
+          <h3 className="text-center">Informacion de env&iacute;o</h3>
           <Formik
             initialValues={initFormikValues}
             validateOnChange
@@ -93,13 +95,13 @@ const ShippingDetails = ({ profile, shipping, subtotal }) => {
                   >
                     <ArrowLeftOutlined />
                     &nbsp;
-                    Go Back
+                    Volver
                   </button>
                   <button
                     className="button button-icon"
                     type="submit"
                   >
-                    Next Step
+                    Continuar
                     &nbsp;
                     <ArrowRightOutlined />
                   </button>
@@ -128,7 +130,9 @@ ShippingDetails.propTypes = {
     mobile: PropType.object,
     isInternational: PropType.bool,
     isDone: PropType.bool
-  }).isRequired
+  }).isRequired,
+  basket: PropType.arrayOf(PropType.object).isRequired,
+
 };
 
 export default withCheckout(ShippingDetails);

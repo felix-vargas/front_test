@@ -16,8 +16,8 @@ const EditForm = ({ isLoading, authProvider }) => {
         disabled={isLoading}
         name="fullname"
         type="text"
-        label="* Full Name"
-        placeholder="Enter your full name"
+        label="* Nombre completo"
+        placeholder="Ingrese su nombre completo"
         component={CustomInput}
         style={{ textTransform: 'capitalize' }}
       />
@@ -25,16 +25,16 @@ const EditForm = ({ isLoading, authProvider }) => {
         disabled={authProvider !== 'password' || isLoading}
         name="email"
         type="email"
-        label="* Email Address"
-        placeholder="test@example.com"
+        label="* Email"
+        placeholder="correo@ejemplo.com"
         component={CustomInput}
       />
       <Field
         disabled={isLoading}
         name="address"
         type="text"
-        label="Address (Will be used for checkout)"
-        placeholder="#245 Brgy. Maligalig, Arayat Pampanga, Philippines"
+        label="Direccion (Sera utilizado en despacho)"
+        placeholder="Av. Francisco Villagra 4050, Nunoa"
         component={CustomInput}
         style={{ textTransform: 'capitalize' }}
       />
@@ -42,7 +42,7 @@ const EditForm = ({ isLoading, authProvider }) => {
         defaultValue={values.mobile}
         name="mobile"
         disabled={isLoading}
-        label="Mobile Number (Will be used for checkout)"
+        label="Numero de telefono (Sera utilizado en despacho)"
       />
       <br />
       <div className="edit-user-action">
@@ -54,7 +54,7 @@ const EditForm = ({ isLoading, authProvider }) => {
         >
           <ArrowLeftOutlined />
           &nbsp;
-          Back to Profile
+          Volver
         </button>
         <button
           className="button w-100-mobile"
@@ -64,7 +64,7 @@ const EditForm = ({ isLoading, authProvider }) => {
         >
           {isLoading ? <LoadingOutlined /> : <CheckOutlined />}
                     &nbsp;
-          {isLoading ? 'Updating Profile' : 'Update Profile'}
+          {isLoading ? 'Actualizando Perfil...' : 'Actualizar Perfil'}
         </button>
       </div>
     </div>

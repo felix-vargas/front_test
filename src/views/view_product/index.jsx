@@ -1,7 +1,7 @@
 import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
 import { ColorChooser, ImageLoader, MessageDisplay } from '@/components/common';
 import { ProductShowcaseGrid } from '@/components/product';
-import { RECOMMENDED_PRODUCTS, SHOP } from '@/constants/routes';
+import { RECOMMENDED_PRODUCTS, SHOP, FEATURED_PRODUCTS } from '@/constants/routes';
 import { displayMoney } from '@/helpers/utils';
 import {
   useBasket,
@@ -19,25 +19,19 @@ const ViewProduct = () => {
   const { product, isLoading, error } = useProduct(id);
   const { addToBasket, isItemOnBasket } = useBasket(id);
   useScrollTop();
-  useDocumentTitle(`View ${product?.name || 'Item'}`);
+  useDocumentTitle(`Ver ${product?.nombre || 'Articulo'}`);
 
-  const [selectedImage, setSelectedImage] = useState(product?.image || '');
+  const [selectedImage, setSelectedImage] = useState(product?.imagen || '');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
-
-  const {
-    recommendedProducts,
-    fetchRecommendedProducts,
-    isLoading: isLoadingFeatured,
-    error: errorFeatured
-  } = useRecommendedProducts(6);
   const colorOverlay = useRef(null);
 
   useEffect(() => {
-    setSelectedImage(product?.image);
+    setSelectedImage(product?.imagen);
   }, [product]);
 
   const onSelectedSizeChange = (newValue) => {
+    console.log(newValue)
     setSelectedSize(newValue.value);
   };
 
@@ -48,22 +42,37 @@ const ViewProduct = () => {
     }
   };
 
-  const sizes = ["S", "M", "L", "XL"];
+  const sizesSample = ["S", "M", "L", "XL"];
 
-  const sortedSizes = sizes.sort((a, b) => {
-    // Define the desired order of sizes
-    const sizeOrder = { "S": 0, "M": 1, "L": 2, "XL": 3 };
+  function sortedSizes(sizes) {
+    // Check if the input is an array of strings or an array of numbers
+    let newSizes = sizes.split(',');
+    if (newSizes.every(size => sizesSample.includes(size))) {
+        // Handle array of strings (sizes like 'S', 'M', 'L', 'XL')
+        // Define a custom sorting function based on size weights
+        const sizeWeights = { 'S': 0, 'M': 1, 'L': 2, 'XL': 3 };
+        newSizes.sort((a, b) => sizeWeights[a] - sizeWeights[b]);
+    } else if (newSizes.every(size => /^\d+$/.test(size))) {
+        // Handle array of numbers represented as strings (sizes like '1', '2', '3', '4')
+        newSizes = newSizes.map(Number); // Convert strings to numbers
+        newSizes.sort((a, b) => a - b);
+    } else {
+        // Handle invalid input
+        return sizesSample.map(size => ({ value: size, label: size }));
+    }
+    console.log(newSizes);
+    return newSizes.map(size => ({ value: size.toString(), label: size.toString() }));
+}
 
-    // Compare the sizes based on their order
-    return sizeOrder[a] - sizeOrder[b];
-  });
+
+
 
   const handleAddToBasket = () => {
-    addToBasket({ ...product, selectedColor, selectedSize: selectedSize || product.sizes[0] });
+    addToBasket({ ...product, selectedColor, selectedSize: selectedSize || product.talla[0] });
   };
 
   return (
-    <main className="content">
+    <main className="content" style={{ display: 'flex', justifyContent: 'center' }}>
       {isLoading && (
         <div className="loader">
           <h4>Cargando producto...</h4>
@@ -76,30 +85,13 @@ const ViewProduct = () => {
       )}
       {(product && !isLoading) && (
         <div className="product-view">
-          <Link to={SHOP}>
+          <Link to={FEATURED_PRODUCTS}>
             <h3 className="button-link d-inline-flex">
               <ArrowLeftOutlined />
               &nbsp; Volver a la tienda
             </h3>
           </Link>
-          <div className="product-modal">
-            {product.imagen !== null && (
-              <div className="product-modal-image-collection">
-                {product.imagen.map((image) => (
-                  <div
-                    className="product-modal-image-collection-wrapper"
-                    key={image.id}
-                    onClick={() => setSelectedImage(image.url)}
-                    role="presentation"
-                  >
-                    <ImageLoader
-                      className="product-modal-image-collection-img"
-                      src={image.url}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="product-modal" >
             <div className="product-modal-image-wrapper">
               {selectedColor && <input type="color" disabled ref={colorOverlay} id="color-overlay" />}
               <ImageLoader
@@ -110,7 +102,6 @@ const ViewProduct = () => {
             </div>
             <div className="product-modal-details">
               <br />
-              <span className="text-subtle">{product.brand}</span>
               <h1 className="margin-top-0">{product.nombre}</h1>
               <span>{product.descripcion}</span>
               <br />
@@ -121,25 +112,16 @@ const ViewProduct = () => {
                 <span className="text-subtle">{product.descripcion}</span>
                 <br />
                 <br />
+                <span className="text-subtle">Talla seleccionada: {selectedSize}</span>
+
                 <Select
-                  placeholder="--Select Size--"
+                  placeholder="--Seleccionar Talla--"
                   onChange={onSelectedSizeChange}
-                  options={sortedSizes.map((size) => ({ label: size, value: size }))}
+                  options={sortedSizes(product.talla)}
                   styles={{ menu: (provided) => ({ ...provided, zIndex: 10 }) }}
                 />
               </div>
               <br />
-              {/* {product.availableColors.length !== undefined && (
-                <div>
-                  <span className="text-subtle">Seleccionar talla</span>
-                  <br />
-                  <br />
-                  <ColorChooser
-                    availableColors={product.availableColors}
-                    onSelectedColorChange={onSelectedColorChange}
-                  />
-                </div>
-              )} */}
               <h1>{displayMoney(product.precio)}</h1>
               <div className="product-modal-action">
                 <button
@@ -147,7 +129,7 @@ const ViewProduct = () => {
                   onClick={handleAddToBasket}
                   type="button"
                 >
-                  {isItemOnBasket(product.id) ? 'Remove From Basket' : 'Add To Basket'}
+                  {isItemOnBasket(product.id) ? 'Quitar del carro' : 'Agregar al carro'}
                 </button>
               </div>
             </div>

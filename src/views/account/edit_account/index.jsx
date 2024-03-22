@@ -31,7 +31,7 @@ const FormSchema = Yup.object().shape({
 });
 
 const EditProfile = () => {
-  useDocumentTitle('Edit Account | Salinaka');
+  useDocumentTitle('Editar Perfil | Dolfino');
   useScrollTop();
 
   const modal = useModal();
@@ -100,7 +100,7 @@ const EditProfile = () => {
   return (
     <Boundary>
       <div className="edit-user">
-        <h3 className="text-center">Edit Account Details</h3>
+        <h3 className="text-center">Editar perfil</h3>
         <Formik
           initialValues={initFormikValues}
           validateOnChange

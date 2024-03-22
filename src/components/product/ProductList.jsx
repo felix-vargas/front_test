@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setLoading } from '@/redux/actions/miscActions';
 import { getProducts } from '@/redux/actions/productActions';
 import axios from 'axios';
+import { ProductShowcaseGrid } from '@/components/product';
 
 const ProductList = (props) => {
   const dispatch = useDispatch();
@@ -19,13 +20,15 @@ const ProductList = (props) => {
     setLoading(true);
     try {
       const response = await axios.get('http://localhost:8000/api/productos');
+      console.log(response)
       setProducts(response.data);
       setRequestStatus(null);
+      setFetching(false);
     } catch (error) {
       setRequestStatus({ message: 'Error al obtener productos' });
     } finally {
       setLoading(false);
-      setFetching(false);
+
     }
   };
   useEffect(() => {

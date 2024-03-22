@@ -13,15 +13,15 @@ import * as Yup from 'yup';
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Email is not valid.')
-    .required('Email is required.'),
+    .email('Email no valido.')
+    .required('Email requerido.'),
   password: Yup.string()
-    .required('Password is required.')
-    .min(8, 'Password length should be at least 8 characters.')
-    .matches(/[A-Z\W]/g, 'Password should contain at least 1 uppercase letter.'),
+    .required('Password requerido.')
+    .min(8, 'Password debe tener un largo de al menos 8 letras.')
+    .matches(/[A-Z\W]/g, 'Password debe contener al menos una letra mayuscula.'),
   fullname: Yup.string()
-    .required('Full name is required.')
-    .min(4, 'Name should be at least 4 characters.')
+    .required('Nombre completo no ingresado.')
+    .min(4, 'Nombre debe ser de al menos 4 letras.')
 });
 
 const SignUp = ({ history }) => {
@@ -32,7 +32,7 @@ const SignUp = ({ history }) => {
   const dispatch = useDispatch();
 
   useScrollTop();
-  useDocumentTitle('Sign Up | Salinaka');
+  useDocumentTitle('Registro | Dolfino');
 
   useEffect(() => () => {
     dispatch(setAuthStatus(null));

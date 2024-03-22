@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-else-return */
 export const selectFilter = (products, filter) => {
+  console.log("SELECTOR:",products);
   if (!products || products.length === 0) return [];
 
   const keyword = filter.keyword.toLowerCase();

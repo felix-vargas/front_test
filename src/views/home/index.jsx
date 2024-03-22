@@ -44,7 +44,7 @@ const Home = () => {
               Hecho a mano, producto chileno
             </p>
             <br />
-            <Link to={SHOP} className="button">
+            <Link to={FEATURED_PRODUCTS} className="button">
               Comprar&nbsp;
               <ArrowRightOutlined />
             </Link>
@@ -64,7 +64,7 @@ const Home = () => {
             />
           ) : (
             <ProductShowcaseGrid
-              products={featuredProducts}
+              products={featuredProducts.slice(0,8)}
               skeletonCount={6}
             />
           )}

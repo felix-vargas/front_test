@@ -69,9 +69,9 @@ const CreditPayment = () => {
               htmlFor="modeCredit"
             >
               <div className="d-flex-grow-1 margin-left-s">
-                <h4 className="margin-0">Credit Card</h4>
+                <h4 className="margin-0">Pago con Tarjeta d&eacute;bito/cr&eacute;dito</h4>
                 <span className="text-subtle d-block margin-top-s">
-                  Pay with Visa, Master Card and other debit or credit card
+                  Pagar con Visa, Master Card u otras tarjetas de d&eacute;bito o cr&eacute;dito
                 </span>
               </div>
               <div className="d-flex">
@@ -83,7 +83,7 @@ const CreditPayment = () => {
           </div>
         </div>
         <div className="checkout-collapse-sub" ref={collapseContainerRef}>
-          <span className="d-block padding-s text-center">Accepted Cards</span>
+          <span className="d-block padding-s text-center">Tarjetas aceptadas</span>
           <div className="checkout-cards-accepted d-flex-center">
             <div className="payment-img payment-img-visa" title="Visa" />
             <div className="payment-img payment-img-express" title="American Express" />
@@ -98,8 +98,8 @@ const CreditPayment = () => {
                 <Field
                   name="name"
                   type="text"
-                  label="* Name on Card"
-                  placeholder="Jane Doe"
+                  label="* Nombre en la tarjeta"
+                  placeholder="Juan Perez"
                   component={CustomInput}
                   style={{ textTransform: 'capitalize' }}
                   inputRef={cardInputRef}
@@ -111,8 +111,8 @@ const CreditPayment = () => {
                   type="text"
                   maxLength={19}
                   onKeyDown={handleOnlyNumberInput}
-                  label="* Card Number"
-                  placeholder="Enter your card number"
+                  label="* Numero de tarjeta"
+                  placeholder="Ingrese los n&uacute;meros de la tarjeta."
                   component={CustomInput}
                 />
               </div>
@@ -122,8 +122,8 @@ const CreditPayment = () => {
                 <Field
                   name="expiry"
                   type="date"
-                  label="* Expiry Date"
-                  placeholder="Enter your expiry date"
+                  label="* Fecha de vencimiento"
+                  placeholder="Ingrese la fecha de vencimiento"
                   component={CustomInput}
                 />
               </div>
@@ -134,7 +134,7 @@ const CreditPayment = () => {
                   maxLength={4}
                   onKeyDown={handleOnlyNumberInput}
                   label="* CCV"
-                  placeholder="****"
+                  placeholder="3 N&uacute;meros de la parte trasera"
                   component={CustomInput}
                 />
               </div>

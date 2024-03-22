@@ -14,10 +14,10 @@ import * as Yup from 'yup';
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Email is not valid.')
-    .required('Email is required.'),
+    .email('Email no valido')
+    .required('Email no ingresado'),
   password: Yup.string()
-    .required('Password is required.')
+    .required('Contrasena no ingresada')
 });
 
 const SignIn = ({ history }) => {
@@ -113,7 +113,7 @@ const SignIn = ({ history }) => {
                           disabled={isAuthenticating}
                           type="submit"
                         >
-                          {isAuthenticating ? 'Signing In' : 'Sign In'}
+                          {isAuthenticating ? 'Iniciando sesion' : 'Iniciar sesion'}
                           &nbsp;
                           {isAuthenticating ? <LoadingOutlined /> : <ArrowRightOutlined />}
                         </button>

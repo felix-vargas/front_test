@@ -13,7 +13,7 @@ const ShippingForm = () => {
             <Field
               name="fullname"
               type="text"
-              label="* Full Name"
+              label="* Nombre completo"
               placeholder="Enter your full name"
               component={CustomInput}
               style={{ textTransform: 'capitalize' }}
@@ -23,18 +23,19 @@ const ShippingForm = () => {
             <Field
               name="email"
               type="email"
-              label="* Email Address"
+              label="* Email"
               placeholder="Enter your email address"
               component={CustomInput}
             />
           </div>
+          
         </div>
         <div className="checkout-fieldset">
           <div className="d-block checkout-field">
             <Field
               name="address"
               type="text"
-              label="* Shipping Address"
+              label="* Direcci&oacute;n para env&iacute;o"
               placeholder="Enter full shipping address"
               component={CustomInput}
             />
@@ -55,7 +56,7 @@ const ShippingForm = () => {
                     className="label-input"
                     htmlFor={field.name}
                   >
-                    Shipping Option
+                    Opciones de env&iacute;o
                   </label>
                 )}
                 <div className="checkout-checkbox-field">
@@ -70,15 +71,35 @@ const ShippingForm = () => {
                   />
                   <label className="d-flex w-100" htmlFor={field.name}>
                     <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; International Shipping &nbsp;
-                      <span className="text-subtle">7-14 days</span>
+                      &nbsp; Envio dentro de santiago &nbsp;
+                      <span className="text-subtle">1-5 D&iacute;as</span>
                     </h5>
-                    <h4 className="margin-0">$50.00</h4>
+                    <h4 className="margin-0">$2.990</h4>
+                  </label>
+                </div>
+                <div className="checkout-checkbox-field">
+                  <input
+                    checked={!field.value}
+                    id={field.name}
+                    onChange={(e) => {
+                      form.setValues({ ...form.values, [field.name]: e.target.checked });
+                    }}
+                    value={meta.value}
+                    type="checkbox"
+                  />
+                  <label className="d-flex w-100" htmlFor={field.name}>
+                    <h5 className="d-flex-grow-1 margin-0">
+                      &nbsp; Envio regiones &nbsp;
+                      <span className="text-subtle">4-15 D&iacute;as</span>
+                    </h5>
+                    <h4 className="margin-0">$7.990</h4>
                   </label>
                 </div>
               </div>
+              
             )}
           </Field>
+          
         </div>
       </div>
     </div>

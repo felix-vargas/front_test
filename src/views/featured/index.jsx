@@ -5,7 +5,7 @@ import bannerImg from '@/images/banner.png';
 import React from 'react';
 
 const FeaturedProducts = () => {
-  useDocumentTitle('Productos destacados | Salinaka');
+  useDocumentTitle('Productos destacados | Dolfino');
   useScrollTop();
 
   let {
@@ -32,14 +32,6 @@ const FeaturedProducts = () => {
   return (
     <main className="content">
       <div className="featured">
-        <div className="banner">
-          <div className="banner-desc">
-            <h1>Productos destacados</h1>
-          </div>
-          <div className="banner-img">
-            <img src={bannerImg} alt="" />
-          </div>
-        </div>
         <div className="display">
           <div className="product-display-grid">
             {(error && !isLoading) ? (

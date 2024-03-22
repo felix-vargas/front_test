@@ -22,16 +22,6 @@ const SocialLogin = ({ isLoading }) => {
   return (
     <div className="auth-provider">
       <button
-        className="button auth-provider-button provider-facebook"
-        disabled={isLoading}
-        onClick={onSignInWithFacebook}
-        type="button"
-      >
-        {/* <i className="fab fa-facebook" /> */}
-        <FacebookOutlined />
-        Continuar con Facebook
-      </button>
-      <button
         className="button auth-provider-button provider-google"
         disabled={isLoading}
         onClick={onSignInWithGoogle}
@@ -39,15 +29,6 @@ const SocialLogin = ({ isLoading }) => {
       >
         <GoogleOutlined />
         Continuar con Google
-      </button>
-      <button
-        className="button auth-provider-button provider-github"
-        disabled={isLoading}
-        onClick={onSignInWithGithub}
-        type="button"
-      >
-        <GithubFilled />
-        Continuar con GitHub
       </button>
     </div>
   );

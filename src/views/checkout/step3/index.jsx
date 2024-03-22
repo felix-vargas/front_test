@@ -1,4 +1,4 @@
-import { CHECKOUT_STEP_1 } from '@/constants/routes';
+import { CHECKOUT_STEP_1, ACCOUNT } from '@/constants/routes';
 import { Form, Formik } from 'formik';
 import { displayActionMessage } from '@/helpers/utils';
 import { useDocumentTitle, useScrollTop } from '@/hooks';
@@ -11,27 +11,31 @@ import withCheckout from '../hoc/withCheckout';
 import CreditPayment from './CreditPayment';
 import PayPalPayment from './PayPalPayment';
 import Total from './Total';
+import { useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 const FormSchema = Yup.object().shape({
   name: Yup.string()
-    .min(4, 'Name should be at least 4 characters.')
-    .required('Name is required'),
+    .min(4, 'El nombre debe tener al menos 4 caracteres')
+    .required('El nombre es requerido'),
   cardnumber: Yup.string()
-    .min(13, 'Card number should be 13-19 digits long')
-    .max(19, 'Card number should only be 13-19 digits long')
-    .required('Card number is required.'),
+    .min(13, 'Numero de la tarjeta debe tener al menos 13 digitos')
+    .max(19, 'Numero de la tarjeta debe tener como maximo 19 digitos')
+    .required('Numero de tarjeta es requerido'),
   expiry: Yup.date()
-    .required('Credit card expiry is required.'),
+    .required('La fecha de vencimiento es requerida'),
   ccv: Yup.string()
-    .min(3, 'CCV length should be 3-4 digit')
-    .max(4, 'CCV length should only be 3-4 digit')
-    .required('CCV is required.'),
-  type: Yup.string().required('Please select paymend mode')
+    .min(3, 'CCV debe tener al menos 3 digitos')
+    .max(4, 'CCV debe tener como maximo 4 digitos')
+    .required('CCV es requerido'),
+  type: Yup.string().required('Por favor selecciona un metodo de pago')
 });
 
-const Payment = ({ shipping, payment, subtotal }) => {
-  useDocumentTitle('Check Out Final Step | Salinaka');
+const Payment = ({ shipping, payment, subtotal, basket }) => {
+  useDocumentTitle('Pago | Dolfino');
   useScrollTop();
+  const profile = useSelector((state) => state.profile);
 
   const initFormikValues = {
     name: payment.name || '',
@@ -42,7 +46,20 @@ const Payment = ({ shipping, payment, subtotal }) => {
   };
 
   const onConfirm = () => {
-    displayActionMessage('Feature not ready yet :)', 'info');
+    let result = axios.post('http://localhost:8000/api/purchase',{
+      usuario: profile.email,
+      basket,
+      subtotal,
+      payment,
+      shipping
+    })
+    if(result){
+      displayActionMessage('Compra realizada','success');
+      return <Redirect to={ACCOUNT} />
+    }else{
+      displayActionMessage('Compra rechazada','info');
+    }
+    
   };
 
   if (!shipping || !shipping.isDone) {
@@ -55,17 +72,11 @@ const Payment = ({ shipping, payment, subtotal }) => {
         initialValues={initFormikValues}
         validateOnChange
         validationSchema={FormSchema}
-        validate={(form) => {
-          if (form.type === 'paypal') {
-            displayActionMessage('Feature not ready yet :)', 'info');
-          }
-        }}
         onSubmit={onConfirm}
       >
         {() => (
           <Form className="checkout-step-3">
             <CreditPayment />
-            <PayPalPayment />
             <Total
               isInternational={shipping.isInternational}
               subtotal={subtotal}
@@ -89,7 +100,9 @@ Payment.propTypes = {
     ccv: PropType.string,
     type: PropType.string
   }).isRequired,
-  subtotal: PropType.number.isRequired
+  subtotal: PropType.number.isRequired,
+  basket: PropType.arrayOf(PropType.object).isRequired,
+
 };
 
 export default withCheckout(Payment);

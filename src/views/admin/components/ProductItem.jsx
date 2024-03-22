@@ -23,7 +23,7 @@ const ProductItem = ({ product }) => {
 
   const onConfirmDelete = () => {
     dispatch(removeProduct(product.id));
-    displayActionMessage('Item successfully deleted');
+    displayActionMessage('Objeto eliminado exitosamente');
     productRef.current.classList.remove('item-active');
   };
 
@@ -42,27 +42,19 @@ const ProductItem = ({ product }) => {
       >
         <div className="grid grid-count-6">
           <div className="grid-col item-img-wrapper">
-            {product.image ? (
+            {product.imagen ? (
               <ImageLoader
-                alt={product.name}
+                alt={product.nombre}
                 className="item-img"
-                src={product.image}
+                src={product.imagen}
               />
             ) : <Skeleton width={50} height={30} />}
           </div>
           <div className="grid-col">
-            <span className="text-overflow-ellipsis">{product.name || <Skeleton width={50} />}</span>
+            <span className="text-overflow-ellipsis">{product.nombre || <Skeleton width={50} />}</span>
           </div>
           <div className="grid-col">
-            <span>{product.brand || <Skeleton width={50} />}</span>
-          </div>
-          <div className="grid-col">
-            <span>{product.price ? displayMoney(product.price) : <Skeleton width={30} />}</span>
-          </div>
-          <div className="grid-col">
-            <span>
-              {product.dateAdded ? displayDate(product.dateAdded) : <Skeleton width={30} />}
-            </span>
+            <span>{product.price ? displayMoney(product.precio) : <Skeleton width={30} />}</span>
           </div>
           <div className="grid-col">
             <span>{product.maxQuantity || <Skeleton width={20} />}</span>

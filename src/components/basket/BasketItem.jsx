@@ -11,7 +11,11 @@ import { removeFromBasket } from '@/redux/actions/basketActions';
 const BasketItem = ({ product }) => {
   const dispatch = useDispatch();
   const onRemoveFromBasket = () => dispatch(removeFromBasket(product.id));
-
+  console.log(product.precio )
+  console.log((product.precio * product.quantity));
+  if(product.quantity === undefined){
+    product.quantity = 1;
+  }
   return (
     <div className="basket-item">
       <BasketItemControl product={product} />
@@ -31,26 +35,14 @@ const BasketItem = ({ product }) => {
           </Link>
           <div className="basket-item-specs">
             <div>
-              <span className="spec-title">Quantity</span>
+              <span className="spec-title">Unidades</span>
               <h5 className="my-0">{product.quantity}</h5>
             </div>
             <div>
-              <span className="spec-title">Size</span>
+              <span className="spec-title">Talla</span>
               <h5 className="my-0">
                 {product.selectedSize}
-                {' '}
-                mm
               </h5>
-            </div>
-            <div>
-              <span className="spec-title">Color</span>
-              <div style={{
-                backgroundColor: product.selectedColor || product.availableColors[0],
-                width: '15px',
-                height: '15px',
-                borderRadius: '50%'
-              }}
-              />
             </div>
           </div>
         </div>

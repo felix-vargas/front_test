@@ -8,13 +8,13 @@ const BasketItemControl = ({ product }) => {
   const dispatch = useDispatch();
 
   const onAddQty = () => {
-    if (product.quantity < product.maxQuantity) {
+    if (product.quantity) {
       dispatch(addQtyItem(product.id));
     }
   };
 
   const onMinusQty = () => {
-    if ((product.maxQuantity >= product.quantity) && product.quantity !== 0) {
+    if ( product.quantity !== 0) {
       dispatch(minusQtyItem(product.id));
     }
   };
@@ -43,7 +43,7 @@ const BasketItemControl = ({ product }) => {
 
 BasketItemControl.propTypes = {
   product: PropType.shape({
-    id: PropType.string,
+    id: PropType.number,
     name: PropType.string,
     brand: PropType.string,
     price: PropType.number,
