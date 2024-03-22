@@ -1,67 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-const UserOrdersTab = ({ userId }) => {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.post('http://localhost:8000/api/productos', {
-          userId 
-        });
-        setOrders(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError('Error al solicitar pedidos...');
-        setLoading(false);
-      }
-    };
-
-    fetchOrders();
-  }, [userId]);
-
-  if (loading) {
-    return (
-      <div className="loader" style={{ minHeight: '80vh' }}>
-        <h3>Mis pedidos</h3>
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="loader" style={{ minHeight: '80vh' }}>
-        <h3>Mis pedidos</h3>
-        <p>{error}</p>
-      </div>
-    );
-  }
-
-  if (orders.length === 0) {
-    return (
-      <div className="loader" style={{ minHeight: '80vh' }}>
-        <h3>Mis pedidos</h3>
-        <strong><span className="text-subtle">No tienes ordenes</span></strong>
-      </div>
-    );
-  }
+const UserOrdersTab = () => {
+  const dotStyle = {
+    width: '10px',
+    height: '10px',
+    backgroundColor: '#000',
+    borderRadius: '50%',
+    animation: 'moveDot 4s linear infinite', // Animation to move the dot horizontally
+  };
 
   return (
-    <div className="user-orders">
-      <h3>Mis pedidos</h3>
-      {orders.map((order, index) => (
-        <div key={index} className="order-details">
-          {Object.keys(order).map(key => (
-            <div key={key}>
-              <strong>{key}:</strong> {order[key]}
-            </div>
-          ))}
-        </div>
-      ))}
+    <div className="loader" style={{ minHeight: '80vh' }}>
+      <h3>Pedido: Polera Negra XL</h3>
+      <h4>Aceptado - En Bodega - Salida de bodega - Despacho - Entregado</h4>
+      <div style={dotStyle}></div> {/* Moving dot */}
+      {/* Keyframe animation */}
+      <style>{`
+        @keyframes moveDot {
+          0% {
+            transform: translateX(-200px);
+          }
+          50% {
+            transform: translateX(100px); /* Adjust distance as needed */
+          }
+          100% {
+            transform: translateX(200px);
+          }
+        }
+      `}</style>
     </div>
   );
 };
