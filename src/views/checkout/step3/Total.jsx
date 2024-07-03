@@ -7,6 +7,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { setPaymentDetails } from '@/redux/actions/checkoutActions';
+import axios from 'axios';
 
 const Total = ({ isInternational, subtotal }) => {
   const { values, submitForm } = useFormikContext();
