@@ -112,7 +112,7 @@ function* authSaga({ type, payload }) {
     case SIGNOUT: {
       try {
         yield initRequest();
-        yield call(firebase.signOut);
+        //yield call(firebase.signOut);
         yield put(clearBasket());
         yield put(clearProfile());
         yield put(resetFilter());

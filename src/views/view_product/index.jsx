@@ -65,7 +65,7 @@ const ViewProduct = () => {
 }
 
 
-
+console.log(product)
 
   const handleAddToBasket = () => {
     addToBasket({ ...product, selectedColor, selectedSize: selectedSize || product.talla[0] });

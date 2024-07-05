@@ -103,34 +103,24 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                 <div className="product-form-field">
                   <Field
                     disabled={isLoading}
-                    name="name"
+                    name="nombre"
+                    id="nombre"
                     type="text"
-                    label="* Product Name"
-                    placeholder="Gago"
+                    label="* Nombre"
+                    placeholder="Poleron estampado"
                     style={{ textTransform: 'capitalize' }}
                     component={CustomInput}
                   />
                 </div>
                 &nbsp;
-                <div className="product-form-field">
-                  <CustomCreatableSelect
-                    defaultValue={{ label: values.brand, value: values.brand }}
-                    name="brand"
-                    iid="brand"
-                    options={brandOptions}
-                    disabled={isLoading}
-                    placeholder="Select/Create Brand"
-                    label="* Brand"
-                  />
-                </div>
               </div>
               <div className="product-form-field">
                 <Field
                   disabled={isLoading}
-                  name="description"
-                  id="description"
+                  name="descripcion"
+                  id="descripcion"
                   rows={3}
-                  label="* Product Description"
+                  label="* Descripcion de producto"
                   component={CustomTextarea}
                 />
               </div>

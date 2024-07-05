@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { signIn } from '@/redux/actions/authActions';
 import { setAuthenticating, setAuthStatus } from '@/redux/actions/miscActions';
 import * as Yup from 'yup';
+import axios from 'axios';
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
@@ -29,7 +30,7 @@ const SignIn = ({ history }) => {
   const dispatch = useDispatch();
 
   useScrollTop();
-  useDocumentTitle('Sesión | Dolfino Tienda');
+  useDocumentTitle('Sesiï¿½n | Dolfino Tienda');
 
   useEffect(() => () => {
     dispatch(setAuthStatus(null));
@@ -38,7 +39,7 @@ const SignIn = ({ history }) => {
 
   const onSignUp = () => history.push(SIGNUP);
 
-  const onSubmitForm = (form) => {
+  const onSubmitForm = async (form) => {
     dispatch(signIn(form.email, form.password));
   };
 

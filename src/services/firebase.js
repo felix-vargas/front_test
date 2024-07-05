@@ -7,7 +7,7 @@ import firebaseConfig from "./config";
 class Firebase {
   constructor() {
     app.initializeApp(firebaseConfig);
-
+    console.log(app)
     this.storage = app.storage();
     this.db = app.firestore();
     this.auth = app.auth();
