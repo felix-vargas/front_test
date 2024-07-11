@@ -4,6 +4,8 @@ import React, { lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { addProduct } from '@/redux/actions/productActions';
+import fs from 'fs'
+import path from 'path';
 
 const ProductForm = lazy(() => import('../components/ProductForm'));
 
@@ -14,7 +16,6 @@ const AddProduct = () => {
   const dispatch = useDispatch();
 
   const onSubmit = (product) => {
-    dispatch(addProduct(product));
   };
 
   return (
@@ -32,18 +33,15 @@ const AddProduct = () => {
           isLoading={isLoading}
           onSubmit={onSubmit}
           product={{
-            name: '',
-            brand: '',
-            price: 0,
-            maxQuantity: 0,
-            description: '',
-            keywords: [],
-            sizes: [],
-            image: '',
-            isFeatured: false,
-            isRecommended: false,
-            availableColors: [],
-            imageCollection: []
+            nombre: '',
+            precio: 0,
+            descripcion: '',
+            talla: 'S,M,L,XL',
+            imagen: '',
+            stock_s: 0,
+            stock_m: 0,
+            stock_l: 0,
+            stock_xl: 0,
           }}
         />
       </Suspense>

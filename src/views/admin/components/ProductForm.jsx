@@ -11,7 +11,8 @@ import { useFileHandler } from '@/hooks';
 import PropType from 'prop-types';
 import React from 'react';
 import * as Yup from 'yup';
-
+import fs from 'fs';
+import axios from 'axios';
 // Default brand names that I used. You can use what you want
 const brandOptions = [
   { value: 'Salt Maalat', label: 'Salt Maalat' },
@@ -21,46 +22,39 @@ const brandOptions = [
 ];
 
 const FormSchema = Yup.object().shape({
-  name: Yup.string()
+  nombre: Yup.string()
     .required('Product name is required.')
     .max(60, 'Product name must only be less than 60 characters.'),
-  brand: Yup.string()
-    .required('Brand name is required.'),
-  price: Yup.number()
+  precio: Yup.number()
     .positive('Price is invalid.')
     .integer('Price should be an integer.')
     .required('Price is required.'),
-  description: Yup.string()
+  descripcion: Yup.string()
     .required('Description is required.'),
-  maxQuantity: Yup.number()
-    .positive('Max quantity is invalid.')
+  stock_s: Yup.number()
+    .integer('Max quantity should be an integer.')
+    .required('Stock.'), 
+  stock_m: Yup.number()
     .integer('Max quantity should be an integer.')
     .required('Max quantity is required.'),
-  keywords: Yup.array()
-    .of(Yup.string())
-    .min(1, 'Please enter at least 1 keyword for this product.'),
-  sizes: Yup.array()
-    .of(Yup.number())
-    .min(1, 'Please enter a size for this product.'),
-  isFeatured: Yup.boolean(),
-  isRecommended: Yup.boolean(),
-  availableColors: Yup.array()
-    .of(Yup.string().required())
-    .min(1, 'Please add a default color for this product.')
+  stock_l: Yup.number()
+    .integer('Max quantity should be an integer.')
+    .required('Max quantity is required.'),
+  stock_xl: Yup.number()
+    .integer('Max quantity should be an integer.')
+    .required('Max quantity is required.'),
 });
 
 const ProductForm = ({ product, onSubmit, isLoading }) => {
   const initFormikValues = {
-    name: product?.name || '',
-    brand: product?.brand || '',
-    price: product?.price || 0,
-    maxQuantity: product?.maxQuantity || 0,
-    description: product?.description || '',
-    keywords: product?.keywords || [],
-    sizes: product?.sizes || [],
-    isFeatured: product?.isFeatured || false,
-    isRecommended: product?.isRecommended || false,
-    availableColors: product?.availableColors || []
+    nombre: product?.nombre || '',
+    precio: product?.precio || 0,
+    descripcion: product?.description || 'Producto de tienda Dolfino',
+    stock_s: product?.stock_s || 0,
+    stock_m: product?.stock_m || 0,
+    stock_l: product?.stock_l || 0,
+    stock_xl:  product?.stock_xl || 0,
+    talla: product?.talla || 'S',
   };
 
   const {
@@ -71,21 +65,29 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
   } = useFileHandler({ image: {}, imageCollection: product?.imageCollection || [] });
 
   const onSubmitForm = (form) => {
-    if (imageFile.image.file || product.imageUrl) {
-      onSubmit({
-        ...form,
-        quantity: 1,
-        // due to firebase function billing policy, let's add lowercase version
-        // of name here instead in firebase functions
-        name_lower: form.name.toLowerCase(),
-        dateAdded: new Date().getTime(),
-        image: imageFile?.image?.file || product.imageUrl,
-        imageCollection: imageFile.imageCollection
-      });
-    } else {
-      // eslint-disable-next-line no-alert
-      alert('Product thumbnail image is required.');
-    }
+        //image: imageFile?.image?.file || product.imageUrl
+    try{
+      const nuevo_producto = {
+        imagen_data:imageFile.image,
+        precio:form.precio,
+        nombre:form.nombre,
+        descripcion:form.descripcion,
+        stock_s:form.stock_s,
+        stock_m:form.stock_m,
+        stock_l:form.stock_l,
+        stock_xl:form.stock_xl,
+        imagen:imageFile.image.file['name'],
+        talla:product?.talla || 'S'
+      }
+      console.log(nuevo_producto)
+      const response = axios.post(
+        'http://localhost:8000/api/create_product',
+        {nuevo_producto}
+      )
+  }
+  catch(err){
+    console.error('Error al intentar agregar producto:',err);
+  }
   };
 
   return (
@@ -119,7 +121,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                   disabled={isLoading}
                   name="descripcion"
                   id="descripcion"
-                  rows={3}
+                  rows={5}
                   label="* Descripcion de producto"
                   component={CustomTextarea}
                 />
@@ -128,75 +130,63 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                 <div className="product-form-field">
                   <Field
                     disabled={isLoading}
-                    name="price"
-                    id="price"
+                    name="precio"
+                    id="precio"
                     type="number"
-                    label="* Price"
+                    label="* Precio"
                     component={CustomInput}
                   />
                 </div>
-                &nbsp;
-                <div className="product-form-field">
-                  <Field
-                    disabled={isLoading}
-                    name="maxQuantity"
-                    type="number"
-                    id="maxQuantity"
-                    label="* Max Quantity"
-                    component={CustomInput}
-                  />
-                </div>
-              </div>
-              <div className="d-flex">
-                <div className="product-form-field">
-                  <CustomCreatableSelect
-                    defaultValue={values.keywords.map((key) => ({ value: key, label: key }))}
-                    name="keywords"
-                    iid="keywords"
-                    isMulti
-                    disabled={isLoading}
-                    placeholder="Create/Select Keywords"
-                    label="* Keywords"
-                  />
                 </div>
                 &nbsp;
-                <div className="product-form-field">
-                  <CustomCreatableSelect
-                    defaultValue={values.keywords.map((key) => ({ value: key, label: key }))}
-                    name="sizes"
-                    iid="sizes"
-                    type="number"
-                    isMulti
-                    disabled={isLoading}
-                    placeholder="Create/Select Sizes"
-                    label="* Sizes (Millimeter)"
-                  />
-                </div>
-              </div>
-              <div className="product-form-field">
-                <FieldArray
-                  name="availableColors"
-                  disabled={isLoading}
-                  component={CustomColorInput}
-                />
-              </div>
-              <div className="product-form-field">
-                <span className="d-block padding-s">Image Collection</span>
-                {!isFileLoading && (
-                  <label htmlFor="product-input-file-collection">
-                    <input
+                <div className="d-flex">
+                  <div className="product-form-field">
+                    <Field
                       disabled={isLoading}
-                      hidden
-                      id="product-input-file-collection"
-                      multiple
-                      onChange={(e) => onFileChange(e, { name: 'imageCollection', type: 'multiple' })}
-                      readOnly={isLoading}
-                      type="file"
+                      name="stock_s"
+                      type="number"
+                      id="stock_s"
+                      label="* Stock Talla S"
+                      component={CustomInput}
                     />
-                    Choose Images
-                  </label>
-                )}
-              </div>
+                  </div>
+                  &nbsp;
+                  <div className="product-form-field">
+                    <Field
+                      disabled={isLoading}
+                      name="stock_m"
+                      type="number"
+                      id="stock_m"
+                      label="* Stock Talla M"
+                      component={CustomInput}
+                    />
+                  </div>
+                  &nbsp;
+                  <div className="product-form-field">
+                    <Field
+                      disabled={isLoading}
+                      name="stock_l"
+                      type="number"
+                      id="stock_l"
+                      label="* Stock Talla L"
+                      component={CustomInput}
+                    />
+                  </div>
+                </div>
+                <div className="d-flex">
+                  &nbsp;
+                  <div className="product-form-field">
+                    <Field
+                      disabled={isLoading}
+                      name="stock_xl"
+                      type="number"
+                      id="stock_xl"
+                      label="* Stock Talla XL"
+                      component={CustomInput}
+                    />
+                  </div>
+                </div>
+              
               <div className="product-form-collection">
                 <>
                   {imageFile.imageCollection.length >= 1 && (
@@ -223,38 +213,6 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                 </>
               </div>
               <br />
-              <div className="d-flex">
-                <div className="product-form-field">
-                  <input
-                    checked={values.isFeatured}
-                    className=""
-                    id="featured"
-                    onChange={(e) => setValues({ ...values, isFeatured: e.target.checked })}
-                    type="checkbox"
-                  />
-                  <label htmlFor="featured">
-                    <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; Add to Featured &nbsp;
-                    </h5>
-                  </label>
-                </div>
-                <div className="product-form-field">
-                  <input
-                    checked={values.isRecommended}
-                    className=""
-                    id="recommended"
-                    onChange={(e) => setValues({ ...values, isRecommended: e.target.checked })}
-                    type="checkbox"
-                  />
-                  <label htmlFor="recommended">
-                    <h5 className="d-flex-grow-1 margin-0">
-                      &nbsp; Add to Recommended &nbsp;
-                    </h5>
-                  </label>
-                </div>
-              </div>
-              <br />
-              <br />
               <br />
               <div className="product-form-field product-form-submit">
                 <button
@@ -264,7 +222,7 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
                 >
                   {isLoading ? <LoadingOutlined /> : <CheckOutlined />}
                   &nbsp;
-                  {isLoading ? 'Saving Product' : 'Save Product'}
+                  {isLoading ? 'Agregando producto...' : 'Agregar producto'}
                 </button>
               </div>
             </div>

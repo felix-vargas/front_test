@@ -29,7 +29,8 @@ const ProductItem = ({ product }) => {
 
   const onCancelDelete = () => {
     productRef.current.classList.remove('item-active');
-  };
+  };  
+  console.log(product)
 
   return (
     <SkeletonTheme
@@ -105,20 +106,11 @@ const ProductItem = ({ product }) => {
 ProductItem.propTypes = {
   product: PropType.shape({
     id: PropType.string,
-    name: PropType.string,
-    brand: PropType.string,
-    price: PropType.number,
-    maxQuantity: PropType.number,
-    description: PropType.string,
-    keywords: PropType.arrayOf(PropType.string),
-    imageCollection: PropType.arrayOf(PropType.object),
-    sizes: PropType.arrayOf(PropType.string),
-    image: PropType.string,
-    imageUrl: PropType.string,
-    isFeatured: PropType.bool,
-    isRecommended: PropType.bool,
-    dateAdded: PropType.number,
-    availableColors: PropType.arrayOf(PropType.string)
+    nombre: PropType.string,
+    precio: PropType.number,
+    descripcion: PropType.string,
+    imagen: PropType.string,
+    talla: PropType.string,
   }).isRequired
 };
 
